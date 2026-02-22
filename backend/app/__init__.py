@@ -1,0 +1,1 @@
+"""Veredicta backend package."""
