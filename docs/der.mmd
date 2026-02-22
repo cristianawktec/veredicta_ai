@@ -1,0 +1,9 @@
+erDiagram
+  users ||--o{ cases : owns
+  cases ||--o{ documents : contains
+  documents ||--o{ document_chunks : splits
+  cases ||--o{ queries : receives
+  queries ||--|| responses : returns
+  queries ||--o{ retrieved_chunks : uses
+  queries ||--o{ agent_executions : runs
+  responses ||--o{ evaluations : evaluated

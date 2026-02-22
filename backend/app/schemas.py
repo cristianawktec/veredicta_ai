@@ -24,5 +24,8 @@ class AutonomousReviewResponse(BaseModel):
 
 class UploadResponse(BaseModel):
     document_id: str
+    case_id: str
     filename: str
     status: str
+    chunks_created: int
+    embeddings_created: bool
