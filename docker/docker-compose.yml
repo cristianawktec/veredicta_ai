@@ -15,6 +15,7 @@ services:
     build:
       context: ../backend
       dockerfile: Dockerfile
+    command: sh -c "pip install --no-cache-dir langchain==0.3.27 openai==1.101.0 pypdf==5.9.0 sqlalchemy==2.0.42 psycopg2-binary==2.9.11 pgvector==0.4.1 python-dotenv==1.0.1 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     env_file:
       - ../.env.example
     environment:

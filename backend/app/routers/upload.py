@@ -1,7 +1,6 @@
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.schemas import UploadResponse
-from app.services.ingestion import ingest_pdf
 
 
 router = APIRouter(tags=["upload"])
@@ -13,6 +12,14 @@ async def upload_document(
     case_id: str | None = Form(default=None),
     document_type: str | None = Form(default=None),
 ) -> UploadResponse:
+    try:
+        from app.services.ingestion import ingest_pdf
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Upload service dependencies are not available",
+        ) from exc
+
     try:
         result = await ingest_pdf(file, case_id, document_type)
     except ValueError as exc:
