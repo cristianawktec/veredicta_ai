@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import Optional
 from uuid import uuid4
 
+import google.generativeai as genai
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from openai import OpenAI
 from pypdf import PdfReader
 
 from app.db import (
@@ -17,7 +17,7 @@ from app.db import (
 
 
 UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", "./data/uploads"))
-EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
+EMBED_MODEL = os.getenv("GEMINI_EMBED_MODEL", "models/text-embedding-004")
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "1200"))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
 
@@ -45,13 +45,19 @@ def _split_text(text: str) -> list[str]:
 
 
 def _generate_embeddings(chunks: list[str]) -> tuple[list[Optional[list[float]]], bool]:
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         return [None for _ in chunks], False
 
-    client = OpenAI(api_key=api_key)
-    response = client.embeddings.create(model=EMBED_MODEL, input=chunks)
-    embeddings = [item.embedding for item in response.data]
+    genai.configure(api_key=api_key)
+    embeddings = []
+    for chunk in chunks:
+        result = genai.embed_content(
+            model=EMBED_MODEL,
+            content=chunk,
+            task_type="retrieval_document"
+        )
+        embeddings.append(result['embedding'])
     return embeddings, True
 
 

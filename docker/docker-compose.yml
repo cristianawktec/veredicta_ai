@@ -15,12 +15,12 @@ services:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    command: sh -c "pip install --no-cache-dir langchain==0.3.27 openai==1.101.0 pypdf==5.9.0 sqlalchemy==2.0.42 psycopg2-binary==2.9.11 pgvector==0.4.1 python-dotenv==1.0.1 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    command: sh -c "pip install --no-cache-dir langchain==0.3.27 google-generativeai==0.8.3 pypdf==5.9.0 sqlalchemy==2.0.42 psycopg2-binary==2.9.11 pgvector==0.4.1 python-dotenv==1.0.1 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     env_file:
       - ../.env.example
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg2://veredicta_user:veredicta_pass@postgres:5432/veredicta}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     ports:
       - "${VEREDICTA_API_BIND:-127.0.0.1}:${VEREDICTA_API_PORT:-8011}:8000"
     depends_on:
