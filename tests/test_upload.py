@@ -3,70 +3,19 @@ Test PDF upload and ingestion pipeline
 TESTE CRÍTICO 1: Upload e processamento de PDF
 """
 import io
-from pathlib import Path
-
-import pytest
+from pypdf import PdfWriter
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 def create_test_pdf(text: str = "Teste de documento jurídico para Veredicta AI") -> bytes:
-    """Create a simple PDF for testing with actual text content"""
-    try:
-        from reportlab.lib.pagesizes import letter
-        from reportlab.pdfgen import canvas
-        
-        buffer = io.BytesIO()
-        c = canvas.Canvas(buffer, pagesize=letter)
-        c.drawString(100, 750, text)
-        c.save()
-        buffer.seek(0)
-        return buffer.getvalue()
-    except ImportError:
-        # Fallback: create a minimal PDF with text using pypdf
-        # This creates a PDF that pypdf can read
-        from pypdf import PdfWriter
-        import tempfile
-        import subprocess
-        
-        # Create a simple text file and convert to PDF using a minimal approach
-        # For testing purposes, we'll create a very basic PDF structure manually
-        # This is a minimal PDF that contains extractable text
-        pdf_content = b"""%PDF-1.4
-1 0 obj
-<< /Type /Catalog /Pages 2 0 R >>
-endobj
-2 0 obj
-<< /Type /Pages /Kids [3 0 R] /Count 1 >>
-endobj
-3 0 obj
-<< /Type /Page /Parent 2 0 R /Resources 4 0 R /MediaBox [0 0 612 792] /Contents 5 0 R >>
-endobj
-4 0 obj
-<< /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >>
-endobj
-5 0 obj
-<< /Length 44 >>
-stream
-BT
-/F1 12 Tf
-100 700 Td
-(""" + text.encode('latin-1', errors='replace').decode('latin-1') + b""") Tj
-ET
-endstream
-endobj
-xref
-0 6
-0000000000 65535 f 
-0000000009 00000 n 
-0000000058 00000 n 
-0000000115 00000 n 
-0000000214 00000 n 
-0000000293 00000 n 
-trailer
-<< /Size 6 /Root 1 0 R >>
-startxref
-385
-%%EOF"""
-        return pdf_content
+    """Create a simple PDF for testing with actual text content."""
+    buffer = io.BytesIO()
+    pdf_canvas = canvas.Canvas(buffer, pagesize=letter)
+    pdf_canvas.drawString(100, 750, text)
+    pdf_canvas.save()
+    buffer.seek(0)
+    return buffer.getvalue()
 
 
 def test_upload_pdf_success(client):
