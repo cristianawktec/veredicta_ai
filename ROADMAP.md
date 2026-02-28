@@ -94,11 +94,14 @@ em ambientes corporativos e jurídicos.
 
 ## 🔄 Em Desenvolvimento
 
-### Fase 8 - Dashboard & Frontend (Iniciado)
-- 📍 **ATUAL:** Módulo 1 (Overview) em desenvolvimento na branch `feature/dashboard-mvp`
+### Fase 8 - Dashboard & Frontend (MVP)
 - ✅ Scaffold inicial React + TypeScript + Vite criado em `frontend/`
 - ✅ Módulo 1 (Overview) concluído
-- 🔄 Módulo 2 (Upload & Analysis) em desenvolvimento na branch `feature/dashboard-upload-analysis`
+- ✅ Módulo 2 (Upload & Analysis) concluído
+- ✅ UI base com Tailwind + componentes estilo shadcn concluída
+
+### Fase 3 - RAG Engine (Iniciado)
+- 📍 **ATUAL:** Query Pipeline MVP em desenvolvimento na branch `feature/rag-query-pipeline-mvp`
 
 ## ⏳ Pendente
 
