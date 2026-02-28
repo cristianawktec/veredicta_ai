@@ -39,3 +39,26 @@ body {
   margin: 0;
   font-size: 18px;
 }
+
+.upload-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.upload-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.upload-form button {
+  width: fit-content;
+  padding: 8px 12px;
+}
+
+.result-panel {
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 12px;
+}

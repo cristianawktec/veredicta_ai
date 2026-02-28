@@ -10,3 +10,12 @@ export type MetricsResponse = {
   requests_count: number;
   avg_confidence_score: number | null;
 };
+
+export type UploadResponse = {
+  document_id: string;
+  case_id: string;
+  filename: string;
+  status: string;
+  chunks_created: number;
+  embeddings_created: boolean;
+};

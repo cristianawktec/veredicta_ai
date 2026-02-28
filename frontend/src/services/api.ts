@@ -1,4 +1,4 @@
-import type { HealthResponse, MetricsResponse } from "../types/dashboard";
+import type { HealthResponse, MetricsResponse, UploadResponse } from "../types/dashboard";
 
 const BASE_URL = "http://127.0.0.1:8011";
 
@@ -16,4 +16,21 @@ export function fetchHealth(): Promise<HealthResponse> {
 
 export function fetchMetrics(): Promise<MetricsResponse> {
   return request<MetricsResponse>("/metrics");
+}
+
+export async function uploadDocument(file: File, documentType: string): Promise<UploadResponse> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("document_type", documentType);
+
+  const response = await fetch(`${BASE_URL}/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Upload failed: ${response.status}`);
+  }
+
+  return (await response.json()) as UploadResponse;
 }

@@ -97,6 +97,8 @@ em ambientes corporativos e jurídicos.
 ### Fase 8 - Dashboard & Frontend (Iniciado)
 - 📍 **ATUAL:** Módulo 1 (Overview) em desenvolvimento na branch `feature/dashboard-mvp`
 - ✅ Scaffold inicial React + TypeScript + Vite criado em `frontend/`
+- ✅ Módulo 1 (Overview) concluído
+- 🔄 Módulo 2 (Upload & Analysis) em desenvolvimento na branch `feature/dashboard-upload-analysis`
 
 ## ⏳ Pendente
 

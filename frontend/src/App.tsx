@@ -1,4 +1,5 @@
 import DashboardOverview from "./components/DashboardOverview";
+import UploadAnalysis from "./components/UploadAnalysis";
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
       </header>
 
       <DashboardOverview />
+      <UploadAnalysis />
     </main>
   );
 }
