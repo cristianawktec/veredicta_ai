@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { fetchHealth, fetchMetrics } from "../services/api";
 import type { HealthResponse, MetricsResponse } from "../types/dashboard";
 
@@ -33,49 +34,95 @@ export default function DashboardOverview() {
   }, []);
 
   if (state.loading) {
-    return <p>Carregando módulo Overview...</p>;
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Dashboard Overview</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">Carregando métricas...</p>
+        </CardContent>
+      </Card>
+    );
   }
 
   if (state.error) {
-    return <p>Erro no Overview: {state.error}</p>;
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Dashboard Overview</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-red-600">Erro no Overview: {state.error}</p>
+        </CardContent>
+      </Card>
+    );
   }
 
   const metrics = state.metrics;
   const health = state.health;
 
   return (
-    <section>
-      <h2>Dashboard Overview</h2>
-      <div className="cards-grid">
-        <article className="card">
-          <h3>Status do Serviço</h3>
-          <p>{health?.status ?? "indisponível"}</p>
-        </article>
+    <section className="space-y-4">
+      <div>
+        <h2 className="text-xl font-semibold">Dashboard Overview</h2>
+        <p className="text-sm text-muted-foreground">Resumo operacional do backend e métricas iniciais do sistema.</p>
+      </div>
 
-        <article className="card">
-          <h3>Serviço</h3>
-          <p>{health?.service ?? "indisponível"}</p>
-        </article>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Status do Serviço</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">{health?.status ?? "indisponível"}</p>
+          </CardContent>
+        </Card>
 
-        <article className="card">
-          <h3>Requisições</h3>
-          <p>{metrics?.requests_count ?? 0}</p>
-        </article>
+        <Card>
+          <CardHeader>
+            <CardTitle>Serviço</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-semibold">{health?.service ?? "indisponível"}</p>
+          </CardContent>
+        </Card>
 
-        <article className="card">
-          <h3>Latência Média (ms)</h3>
-          <p>{metrics?.latency_ms ?? "n/d"}</p>
-        </article>
+        <Card>
+          <CardHeader>
+            <CardTitle>Requisições</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">{metrics?.requests_count ?? 0}</p>
+          </CardContent>
+        </Card>
 
-        <article className="card">
-          <h3>Confiança Média</h3>
-          <p>{metrics?.avg_confidence_score ?? "n/d"}</p>
-        </article>
+        <Card>
+          <CardHeader>
+            <CardTitle>Latência Média (ms)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">{metrics?.latency_ms ?? "n/d"}</p>
+          </CardContent>
+        </Card>
 
-        <article className="card">
-          <h3>Última Atualização</h3>
-          <p>{metrics?.timestamp ?? "n/d"}</p>
-        </article>
+        <Card>
+          <CardHeader>
+            <CardTitle>Confiança Média</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">{metrics?.avg_confidence_score ?? "n/d"}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Última Atualização</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground break-all">{metrics?.timestamp ?? "n/d"}</p>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );

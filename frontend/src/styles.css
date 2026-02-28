@@ -1,64 +1,28 @@
-:root {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+  }
 
-body {
-  margin: 0;
-}
+  * {
+    @apply border-border;
+  }
 
-.app-shell {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.card {
-  border: 1px solid;
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.card h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-.card p {
-  margin: 0;
-  font-size: 18px;
-}
-
-.upload-form {
-  display: grid;
-  gap: 10px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-}
-
-.upload-form label {
-  display: grid;
-  gap: 6px;
-}
-
-.upload-form button {
-  width: fit-content;
-  padding: 8px 12px;
-}
-
-.result-panel {
-  border: 1px solid;
-  border-radius: 8px;
-  padding: 12px;
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
 }

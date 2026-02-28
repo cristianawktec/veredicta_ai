@@ -1,5 +1,10 @@
 import { FormEvent, useState } from "react";
 
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Select } from "./ui/select";
 import { uploadDocument } from "../services/api";
 import type { UploadResponse } from "../types/dashboard";
 
@@ -40,54 +45,86 @@ export default function UploadAnalysis() {
   }
 
   return (
-    <section>
-      <h2>Upload & Analysis</h2>
-      <form className="upload-form" onSubmit={handleSubmit}>
-        <label>
-          Arquivo PDF
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={(event) => {
-              const selected = event.target.files?.[0] ?? null;
-              setState((current) => ({ ...current, file: selected, error: null }));
-            }}
-          />
-        </label>
+    <section className="space-y-4">
+      <div>
+        <h2 className="text-xl font-semibold">Upload & Analysis</h2>
+        <p className="text-sm text-muted-foreground">Envie um PDF para processar e visualizar um resumo da análise.</p>
+      </div>
 
-        <label>
-          Tipo de documento
-          <select
-            value={state.documentType}
-            onChange={(event) => {
-              const selected = event.target.value as UploadState["documentType"];
-              setState((current) => ({ ...current, documentType: selected }));
-            }}
-          >
-            <option value="Contrato">Contrato</option>
-            <option value="Sentença">Sentença</option>
-            <option value="Laudo">Laudo</option>
-          </select>
-        </label>
+      <Card>
+        <CardHeader>
+          <CardTitle>Novo Documento</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="grid gap-4" onSubmit={handleSubmit}>
+            <div className="grid gap-2">
+              <Label htmlFor="pdf-file">Arquivo PDF</Label>
+              <Input
+                id="pdf-file"
+                type="file"
+                accept="application/pdf"
+                onChange={(event) => {
+                  const selected = event.target.files?.[0] ?? null;
+                  setState((current) => ({ ...current, file: selected, error: null }));
+                }}
+              />
+            </div>
 
-        <button type="submit" disabled={state.loading}>
-          {state.loading ? "Enviando..." : "Enviar para análise"}
-        </button>
-      </form>
+            <div className="grid gap-2">
+              <Label htmlFor="analysis-type">Tipo de análise</Label>
+              <Select
+                id="analysis-type"
+                value={state.documentType}
+                onChange={(event) => setState((current) => ({ ...current, documentType: event.target.value as UploadState["documentType"] }))}
+              >
+                <option value="Contrato">Contrato</option>
+                <option value="Sentença">Sentença</option>
+                <option value="Laudo">Laudo</option>
+              </Select>
+            </div>
 
-      {state.error ? <p>Erro: {state.error}</p> : null}
+            <Button type="submit" disabled={state.loading}>
+              {state.loading ? "Analisando..." : "Enviar PDF"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
 
-      {state.result ? (
-        <div className="result-panel">
-          <h3>Resultado da Análise</h3>
-          <p>Document ID: {state.result.document_id}</p>
-          <p>Case ID: {state.result.case_id}</p>
-          <p>Arquivo: {state.result.filename}</p>
-          <p>Status: {state.result.status}</p>
-          <p>Chunks criados: {state.result.chunks_created}</p>
-          <p>Embeddings criados: {String(state.result.embeddings_created)}</p>
-        </div>
-      ) : null}
+      {state.error && (
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-sm text-red-600">{state.error}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {state.result && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Resultado da análise</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <p className="text-sm">
+              <span className="font-semibold">ID:</span> {state.result.document_id}
+            </p>
+            <p className="text-sm">
+              <span className="font-semibold">Tipo:</span> {state.result.case_id}
+            </p>
+            <p className="text-sm">
+              <span className="font-semibold">Arquivo:</span> {state.result.filename}
+            </p>
+            <p className="text-sm">
+              <span className="font-semibold">Status:</span> {state.result.status}
+            </p>
+            <p className="text-sm">
+              <span className="font-semibold">Chunks criados:</span> {state.result.chunks_created}
+            </p>
+            <p className="text-sm">
+              <span className="font-semibold">Embeddings criados:</span> {String(state.result.embeddings_created)}
+            </p>
+          </CardContent>
+        </Card>
+      )}
     </section>
   );
 }
