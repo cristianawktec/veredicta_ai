@@ -1,6 +1,8 @@
 import type { HealthResponse, MetricsResponse, UploadResponse } from "../types/dashboard";
 
-const BASE_URL = "http://127.0.0.1:8011";
+const BASE_URL =
+  import.meta.env.VITE_API_URL ??
+  `${window.location.protocol}//${window.location.hostname}:8011`;
 
 async function request<T>(path: string): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`);
