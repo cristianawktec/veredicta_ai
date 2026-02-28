@@ -90,12 +90,13 @@ em ambientes corporativos e jurídicos.
 - ✅ **Google Gemini AI integrado** (text-embedding-004, 768 dims)
 - ✅ Modelagem completa do banco de dados
 - ✅ Vector storage (pgvector) operacional
-- ⏸️ Testes automatizados (pytest) - **EM PROGRESSO**
+- ✅ Testes automatizados (pytest) - **CONCLUÍDO (10 passed, 2 skipped)**
 
 ## 🔄 Em Desenvolvimento
 
-### Fase 2 - Finalização
-- 📍 **ATUAL:** Suite de testes com pytest
+### Fase 8 - Dashboard & Frontend (Iniciado)
+- 📍 **ATUAL:** Módulo 1 (Overview) em desenvolvimento na branch `feature/dashboard-mvp`
+- ✅ Scaffold inicial React + TypeScript + Vite criado em `frontend/`
 
 ## ⏳ Pendente
 
